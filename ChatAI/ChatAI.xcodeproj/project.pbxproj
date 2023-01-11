@@ -17,6 +17,8 @@
 		C3161975296DF7B500005CBC /* MainVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3161974296DF7B500005CBC /* MainVM.swift */; };
 		C3161977296DF7F000005CBC /* MainCoord.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3161976296DF7F000005CBC /* MainCoord.swift */; };
 		C3161979296DF88E00005CBC /* Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3161978296DF88E00005CBC /* Storyboard.swift */; };
+		C37B1589296F2725000177B8 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37B1588296F2725000177B8 /* InputTextView.swift */; };
+		C37B158B296F2853000177B8 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37B158A296F2853000177B8 /* UIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,8 @@
 		C3161974296DF7B500005CBC /* MainVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVM.swift; sourceTree = "<group>"; };
 		C3161976296DF7F000005CBC /* MainCoord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoord.swift; sourceTree = "<group>"; };
 		C3161978296DF88E00005CBC /* Storyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storyboard.swift; sourceTree = "<group>"; };
+		C37B1588296F2725000177B8 /* InputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
+		C37B158A296F2853000177B8 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +72,7 @@
 				C3161971296DF5F700005CBC /* API */,
 				C316196B296DF24A00005CBC /* Common */,
 				C316196A296DF23D00005CBC /* ViewController */,
+				C37B1587296F2701000177B8 /* Views */,
 				C3161970296DF47E00005CBC /* Resources */,
 			);
 			path = ChatAI;
@@ -96,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				C3161978296DF88E00005CBC /* Storyboard.swift */,
+				C37B158A296F2853000177B8 /* UIView.swift */,
 			);
 			path = Extesions;
 			sourceTree = "<group>";
@@ -116,6 +122,14 @@
 				C3161972296DF60600005CBC /* NetworkManager.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		C37B1587296F2701000177B8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C37B1588296F2725000177B8 /* InputTextView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,6 +209,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C37B158B296F2853000177B8 /* UIView.swift in Sources */,
+				C37B1589296F2725000177B8 /* InputTextView.swift in Sources */,
 				C3161973296DF60600005CBC /* NetworkManager.swift in Sources */,
 				C316195B296DF22D00005CBC /* MainVC.swift in Sources */,
 				C3161977296DF7F000005CBC /* MainCoord.swift in Sources */,

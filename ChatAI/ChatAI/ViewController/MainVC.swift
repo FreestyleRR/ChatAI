@@ -10,12 +10,21 @@ import UIKit
 class MainVC: UIViewController {
     var viewModel: MainVM!
     
-    private var textField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "Typing here..."
+    private var outputTextView: UITextView = {
+        let textView = UITextView()
+        textView.backgroundColor = .systemBackground
+        textView.isUserInteractionEnabled = false
+        textView.isSelectable = false
+        textView.isEditable = false
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        return textView
+    }()
+    
+    private var inputTextView: InputTextView = {
+        let textView = InputTextView()
         
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        return textField
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        return textView
     }()
 
     override func viewDidLoad() {
@@ -28,12 +37,20 @@ class MainVC: UIViewController {
     }
 
     private func setupConstraints() {
-        view.addSubview(textField)
+        view.addSubviews(outputTextView, inputTextView)
         
-        
-//        NSLayoutConstraint.activate([
-//            textField.
-//        ])
+        NSLayoutConstraint.activate([
+            outputTextView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            outputTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            outputTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            outputTextView.bottomAnchor.constraint(equalTo: inputTextView.topAnchor),
+            
+            inputTextView.topAnchor.constraint(equalTo: outputTextView.bottomAnchor),
+            inputTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            inputTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            inputTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            inputTextView.heightAnchor.constraint(equalToConstant: 60)
+        ])
     }
     
     
