@@ -19,7 +19,8 @@ final class MainCoord {
     
     private lazy var root: UINavigationController = {
         let root = UINavigationController(rootViewController: controller)
-        root.navigationBar.isHidden = true
+        root.navigationBar.prefersLargeTitles = true
+        root.navigationBar.barStyle = .black
         return root
     }()
     

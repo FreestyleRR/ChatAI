@@ -19,6 +19,8 @@
 		C3161979296DF88E00005CBC /* Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3161978296DF88E00005CBC /* Storyboard.swift */; };
 		C37B1589296F2725000177B8 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37B1588296F2725000177B8 /* InputTextView.swift */; };
 		C37B158B296F2853000177B8 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37B158A296F2853000177B8 /* UIView.swift */; };
+		C3A4DCE8296F62150029C853 /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A4DCE7296F62150029C853 /* UITextView.swift */; };
+		C3D04733296F63650084B51B /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D04732296F63650084B51B /* Command.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +37,8 @@
 		C3161978296DF88E00005CBC /* Storyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storyboard.swift; sourceTree = "<group>"; };
 		C37B1588296F2725000177B8 /* InputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
 		C37B158A296F2853000177B8 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		C3A4DCE7296F62150029C853 /* UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextView.swift; sourceTree = "<group>"; };
+		C3D04732296F63650084B51B /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +96,7 @@
 		C316196B296DF24A00005CBC /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				C3D04732296F63650084B51B /* Command.swift */,
 				C316196C296DF24E00005CBC /* Extesions */,
 			);
 			path = Common;
@@ -102,6 +107,7 @@
 			children = (
 				C3161978296DF88E00005CBC /* Storyboard.swift */,
 				C37B158A296F2853000177B8 /* UIView.swift */,
+				C3A4DCE7296F62150029C853 /* UITextView.swift */,
 			);
 			path = Extesions;
 			sourceTree = "<group>";
@@ -212,7 +218,9 @@
 				C37B158B296F2853000177B8 /* UIView.swift in Sources */,
 				C37B1589296F2725000177B8 /* InputTextView.swift in Sources */,
 				C3161973296DF60600005CBC /* NetworkManager.swift in Sources */,
+				C3D04733296F63650084B51B /* Command.swift in Sources */,
 				C316195B296DF22D00005CBC /* MainVC.swift in Sources */,
+				C3A4DCE8296F62150029C853 /* UITextView.swift in Sources */,
 				C3161977296DF7F000005CBC /* MainCoord.swift in Sources */,
 				C3161957296DF22D00005CBC /* AppDelegate.swift in Sources */,
 				C3161979296DF88E00005CBC /* Storyboard.swift in Sources */,
