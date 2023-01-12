@@ -14,6 +14,7 @@ final class InputTextView: UIView {
     private let inputLinesScrollThreshold = 6
     private let defaultTextViewHeight: CGFloat = 36.3
     private var heightConstraint: NSLayoutConstraint?
+    private let fontSize: CGFloat = 15
     
     private lazy var separatorView: UIView = {
         let view = UIView()
@@ -26,11 +27,11 @@ final class InputTextView: UIView {
         let textView = UITextView()
         textView.delegate = self
         textView.isScrollEnabled = false
-        textView.font = UIFont.systemFont(ofSize: 17, weight: .regular)
-        textView.backgroundColor = .tertiarySystemFill
+        textView.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
+        textView.backgroundColor = .systemGroupedBackground
         textView.contentInset = .init(top: 0, left: 10, bottom: 0, right: 10)
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.layer.cornerRadius = 17
+        textView.layer.cornerRadius = fontSize
         textView.tintColor = .systemRed
         
         textView.showsVerticalScrollIndicator = true
@@ -51,8 +52,12 @@ final class InputTextView: UIView {
         var config = UIButton.Configuration.gray()
         config.cornerStyle = .capsule
         config.background.backgroundColor = .link
+        
+        let imageConfig = UIImage.SymbolConfiguration(scale: .medium)
+        let image = UIImage(systemName: "arrow.up", withConfiguration: imageConfig)
+        
         let button = UIButton(configuration: config)
-        button.setImage(UIImage(systemName: "arrow.up"), for: .normal)
+        button.setImage(image, for: .normal)
         button.tintColor = .white
         button.addTarget(self, action: #selector(sendButtonAction), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -61,8 +66,8 @@ final class InputTextView: UIView {
     
     private lazy var placeholderLabel: UILabel = {
         let label = UILabel()
-        label.text = "Typing here..."
-        label.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        label.text = "Question"
+        label.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
         label.textColor = .placeholderText
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -101,8 +106,8 @@ final class InputTextView: UIView {
             sendButton.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 10),
             sendButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -7),
             sendButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
-            sendButton.heightAnchor.constraint(equalToConstant: 34),
-            sendButton.widthAnchor.constraint(equalToConstant: 34),
+            sendButton.heightAnchor.constraint(equalToConstant: (fontSize + 2) * 2),
+            sendButton.widthAnchor.constraint(equalToConstant: (fontSize + 2) * 2),
             
             placeholderLabel.centerYAnchor.constraint(equalTo: textView.centerYAnchor),
             placeholderLabel.leadingAnchor.constraint(equalTo: textView.leadingAnchor, constant: 14),

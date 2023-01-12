@@ -31,7 +31,6 @@ class MainVC: UIViewController {
         textView.onSendTapped = CommandWith<String> { [weak self] in
             guard let self = self else { return }
             
-            self.hideKeyboard()
             self.outputTextView.text = self.outputTextView.text + "\n" + $0
         }
         textView.translatesAutoresizingMaskIntoConstraints = false
