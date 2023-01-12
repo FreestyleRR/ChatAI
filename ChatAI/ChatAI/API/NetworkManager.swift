@@ -14,7 +14,7 @@ final class NetworkManager {
     private var client: OpenAISwift?
     
     @frozen enum Constatnts {
-        static let key = ""
+        static let key = "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"
     }
     
     private init() {}
