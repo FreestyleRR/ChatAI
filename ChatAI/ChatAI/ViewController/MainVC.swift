@@ -25,13 +25,22 @@ class MainVC: UIViewController {
         return textView
     }()
     
+    private lazy var tableView: UITableView = {
+        let textView = UITableView()
+        textView.backgroundColor = .systemBackground
+        textView.showsVerticalScrollIndicator = false
+        textView.showsHorizontalScrollIndicator = false
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        return textView
+    }()
+    
     private lazy var inputTextView: InputTextView = {
         let textView = InputTextView()
         textView.onSendTapped = CommandWith<String> { [weak self] in
             guard let self = self else { return }
             
             self.sendQuestion($0)
-            self.outputTextView.insertText("\n" + $0)
+            self.outputTextView.insertText("Me: - \($0) \n")
         }
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
@@ -61,56 +70,26 @@ class MainVC: UIViewController {
     private func setup() {
         title = "Chat AI"
         setupConstraints()
-        setupNotifications()
-        setupDismissKeyboardGesture()
     }
 
     private func setupConstraints() {
-        view.addSubviews(outputTextView, inputTextView, bottomSpacerView)
+        view.addSubviews(tableView, inputTextView, bottomSpacerView)
         
         NSLayoutConstraint.activate([
-            outputTextView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            outputTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 7),
-            outputTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -7),
-            outputTextView.bottomAnchor.constraint(equalTo: inputTextView.topAnchor, constant: -10),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 7),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -7),
+            tableView.bottomAnchor.constraint(equalTo: inputTextView.topAnchor, constant: -10),
             
             inputTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             inputTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            inputTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            inputTextView.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor),
             
             bottomSpacerView.topAnchor.constraint(equalTo: inputTextView.bottomAnchor),
             bottomSpacerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             bottomSpacerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             bottomSpacerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
-    }
-    
-    private func setupDismissKeyboardGesture() {
-        let gestureTap = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        view.addGestureRecognizer(gestureTap)
-    }
-    
-    private func setupNotifications() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillShow),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil
-        )
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillShow),
-            name: UIResponder.keyboardWillChangeFrameNotification,
-            object: nil
-        )
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillHide),
-            name: UIResponder.keyboardWillHideNotification,
-            object: nil
-        )
     }
     
     private func sendQuestion(_ question: String) {
@@ -121,32 +100,12 @@ class MainVC: UIViewController {
                     self?.outputTextView.insertText(answer)
                 }
             case .failure(let error):
-                print(String(describing: error.localizedDescription))
+                print(error)
             }
         }
     }
     
     //MARK: - Actions -
-    
-    @objc private func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if abs(view.frame.origin.y) != abs(keyboardSize.height) {
-                view.frame.origin.y = -keyboardSize.height
-                UIView.animate(withDuration: 0.1) { [weak self] in
-                    self?.view.layoutIfNeeded()
-                }
-            }
-        }
-    }
-    
-    @objc private func keyboardWillHide() {
-        if view.frame.origin.y != 0 {
-            view.frame.origin.y = 0
-            UIView.animate(withDuration: 0.1) { [weak self] in
-                self?.view.layoutIfNeeded()
-            }
-        }
-    }
     
     @objc private func hideKeyboard() {
         view.endEditing(true)

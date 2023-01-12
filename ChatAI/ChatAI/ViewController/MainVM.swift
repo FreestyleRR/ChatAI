@@ -18,13 +18,13 @@ final class MainVM {
     
     //MARK: - Network -
     
-    func sendQuestion(_ question: String, completion: @escaping (Result<String, Error>) -> Void) {
+    func sendQuestion(_ question: String, completion: @escaping CommonResultClosure) {
         networkManager.getResponse(input: question) { result in
             switch result {
             case .success(let answer):
-                completion(.success(answer))
+                completion(.success(answerMessage: answer))
             case .failure(let error):
-                completion(.failure(error))
+                completion(.failure(errorMessage: error))
             }
         }
     }
