@@ -26,13 +26,6 @@ class MainVC: UIViewController {
         return textView
     }()
     
-    private lazy var bottomSpacerView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .secondarySystemBackground
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     private lazy var inputTextView: InputTextView = {
         let textView = InputTextView()
         textView.onSendTapped = CommandWith<String> { [weak self] in
@@ -41,9 +34,15 @@ class MainVC: UIViewController {
             self.hideKeyboard()
             self.outputTextView.text = self.outputTextView.text + "\n" + $0
         }
-        textView.backgroundColor = .secondarySystemBackground
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
+    }()
+    
+    private lazy var bottomSpacerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray6
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     //MARK: - Life Cycle VC -
@@ -51,6 +50,11 @@ class MainVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        hideKeyboard()
     }
     
     //MARK: - Setup -
@@ -86,7 +90,6 @@ dfgdfgsdfgsdfgsdfgdfgsdfgdsfgsdfgdfsgsdgdfgsdfgdfgsdfgdfsgsdfgsdf
             inputTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             inputTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             inputTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-//            inputTextView.heightAnchor.constraint(equalToConstant: 55),
             
             bottomSpacerView.topAnchor.constraint(equalTo: inputTextView.bottomAnchor),
             bottomSpacerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),

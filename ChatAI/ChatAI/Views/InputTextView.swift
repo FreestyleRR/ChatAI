@@ -12,6 +12,7 @@ final class InputTextView: UIView {
     //MARK: - Properties -
     
     private let inputLinesScrollThreshold = 6
+    private let defaultTextViewHeight: CGFloat = 36.3
     private var heightConstraint: NSLayoutConstraint?
     
     private lazy var separatorView: UIView = {
@@ -24,11 +25,16 @@ final class InputTextView: UIView {
     private lazy var textView: UITextView = {
         let textView = UITextView()
         textView.delegate = self
+        textView.isScrollEnabled = false
         textView.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         textView.backgroundColor = .tertiarySystemFill
         textView.contentInset = .init(top: 0, left: 10, bottom: 0, right: 10)
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.layer.cornerRadius = 17
+        textView.tintColor = .systemRed
+        
+        textView.showsVerticalScrollIndicator = true
+        textView.showsHorizontalScrollIndicator = false
         
         textView.autocapitalizationType = .none
         textView.autocorrectionType = .no
@@ -38,7 +44,6 @@ final class InputTextView: UIView {
         textView.spellCheckingType = .no
         textView.returnKeyType = .send
         
-        textView.tintColor = .systemRed
         return textView
     }()
     
@@ -70,6 +75,7 @@ final class InputTextView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupConstraints()
+        backgroundColor = .systemGray6
     }
     
     required init?(coder: NSCoder) {
@@ -92,6 +98,7 @@ final class InputTextView: UIView {
             textView.trailingAnchor.constraint(equalTo: sendButton.leadingAnchor, constant: -7),
             textView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
             
+            sendButton.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 10),
             sendButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -7),
             sendButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
             sendButton.heightAnchor.constraint(equalToConstant: 34),
@@ -104,27 +111,36 @@ final class InputTextView: UIView {
     }
     
     private func checkTextView() {
+        if heightConstraint?.constant == textView.contentSize.height { return }
+        
         placeholderLabel.isHidden = !textView.text.isEmpty
         let isConstraintActive = heightConstraint.flatMap { $0.isActive } ?? false
-        
-        let lineHeight = textView.font?.lineHeight ?? 1
-        
+
         if isConstraintActive == false {
             heightConstraint = textView.heightAnchor.constraint(equalToConstant: textView.frame.height)
             heightConstraint?.isActive = true
             textView.isScrollEnabled = true
         } else {
-            heightConstraint?.constant = textView.numberOfLines > inputLinesScrollThreshold
-            ? lineHeight * CGFloat(inputLinesScrollThreshold) : textView.contentSize.height
+            if textView.numberOfLines < inputLinesScrollThreshold {
+                heightConstraint?.constant = textView.contentSize.height
+            }
         }
         textView.layoutIfNeeded()
+    }
+    
+    //MARK: - Helpers -
+    
+    private func resetTextView() {
+        textView.text.removeAll()
+        heightConstraint?.constant = defaultTextViewHeight
+        placeholderLabel.isHidden = false
     }
     
     //MARK: - Actions -
     
     @objc private func sendButtonAction() {
         onSendTapped.perform(with: textView.text)
-        textView.text.removeAll()
+        resetTextView()
     }
 }
 
