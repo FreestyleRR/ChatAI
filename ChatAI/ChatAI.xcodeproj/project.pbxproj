@@ -18,7 +18,6 @@
 		C3161979296DF88E00005CBC /* Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3161978296DF88E00005CBC /* Storyboard.swift */; };
 		C37B1589296F2725000177B8 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37B1588296F2725000177B8 /* InputTextView.swift */; };
 		C37B158B296F2853000177B8 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37B158A296F2853000177B8 /* UIView.swift */; };
-		C3981A6F2970424400682E60 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C3981A6E2970424400682E60 /* IQKeyboardManagerSwift */; };
 		C3981A72297045C400682E60 /* OpenAISwift in Frameworks */ = {isa = PBXBuildFile; productRef = C3981A71297045C400682E60 /* OpenAISwift */; };
 		C3A4DCE8296F62150029C853 /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A4DCE7296F62150029C853 /* UITextView.swift */; };
 		C3D04733296F63650084B51B /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D04732296F63650084B51B /* Command.swift */; };
@@ -48,7 +47,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C3981A72297045C400682E60 /* OpenAISwift in Frameworks */,
-				C3981A6F2970424400682E60 /* IQKeyboardManagerSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,7 +155,6 @@
 			);
 			name = ChatAI;
 			packageProductDependencies = (
-				C3981A6E2970424400682E60 /* IQKeyboardManagerSwift */,
 				C3981A71297045C400682E60 /* OpenAISwift */,
 			);
 			productName = ChatAI;
@@ -189,7 +186,6 @@
 			);
 			mainGroup = C316194A296DF22D00005CBC;
 			packageReferences = (
-				C3981A6D2970424400682E60 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				C3981A70297045C400682E60 /* XCRemoteSwiftPackageReference "OpenAISwift" */,
 			);
 			productRefGroup = C3161954296DF22D00005CBC /* Products */;
@@ -456,14 +452,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C3981A6D2970424400682E60 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager";
-			requirement = {
-				kind = exactVersion;
-				version = 6.5.0;
-			};
-		};
 		C3981A70297045C400682E60 /* XCRemoteSwiftPackageReference "OpenAISwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/adamrushy/OpenAISwift";
@@ -475,11 +463,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C3981A6E2970424400682E60 /* IQKeyboardManagerSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C3981A6D2970424400682E60 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
-			productName = IQKeyboardManagerSwift;
-		};
 		C3981A71297045C400682E60 /* OpenAISwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C3981A70297045C400682E60 /* XCRemoteSwiftPackageReference "OpenAISwift" */;

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import IQKeyboardManagerSwift
 
 class MainVC: UIViewController {
     var viewModel: MainVM!
@@ -21,7 +20,7 @@ class MainVC: UIViewController {
         textView.showsHorizontalScrollIndicator = false
         textView.isScrollEnabled = true
         textView.alwaysBounceVertical = true
-        textView.font = UIFont.systemFont(ofSize: 17)
+        textView.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
@@ -64,17 +63,6 @@ class MainVC: UIViewController {
         setupConstraints()
         setupNotifications()
         setupDismissKeyboardGesture()
-//        outputTextView.text = """
-//1 - vxczgsd
-//2 - gdfgs gfd
-//3 - gdfgdf
-//4 - g df
-//5 - g dfgsdf
-//6 - gdfs gdf gdfgsfdgsdf gdfgsdfgsdfgsdfgsdfgfdsgdf gdfg
-//7 -
-//8 - gdfgdsfg dfgsdfg dfgsfdgfdgsdgdfgsdfgsdfgdsfgdsfg
-//9 - dfgdfgsdfgsdfgsdfgdfgsdfgdsfgsdfgdfsgsdgdfgsdfgdfgsdfgdfsgsdfgsdffinish
-//"""
     }
 
     private func setupConstraints() {
@@ -86,7 +74,6 @@ class MainVC: UIViewController {
             outputTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -7),
             outputTextView.bottomAnchor.constraint(equalTo: inputTextView.topAnchor, constant: -10),
             
-            inputTextView.topAnchor.constraint(equalTo: outputTextView.bottomAnchor),
             inputTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             inputTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             inputTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -108,6 +95,13 @@ class MainVC: UIViewController {
             self,
             selector: #selector(keyboardWillShow),
             name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillChangeFrameNotification,
             object: nil
         )
         
@@ -136,8 +130,11 @@ class MainVC: UIViewController {
     
     @objc private func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if view.frame.origin.y == 0 {
-                view.frame.origin.y -= keyboardSize.height
+            if abs(view.frame.origin.y) != abs(keyboardSize.height) {
+                view.frame.origin.y = -keyboardSize.height
+                UIView.animate(withDuration: 0.1) { [weak self] in
+                    self?.view.layoutIfNeeded()
+                }
             }
         }
     }
@@ -145,6 +142,9 @@ class MainVC: UIViewController {
     @objc private func keyboardWillHide() {
         if view.frame.origin.y != 0 {
             view.frame.origin.y = 0
+            UIView.animate(withDuration: 0.1) { [weak self] in
+                self?.view.layoutIfNeeded()
+            }
         }
     }
     
