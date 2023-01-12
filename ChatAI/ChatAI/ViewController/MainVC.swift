@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import IQKeyboardManagerSwift
 
 class MainVC: UIViewController {
     var viewModel: MainVM!
@@ -21,7 +22,6 @@ class MainVC: UIViewController {
         textView.isScrollEnabled = true
         textView.alwaysBounceVertical = true
         textView.font = UIFont.systemFont(ofSize: 17)
-        textView.contentInset = .init(top: 5, left: 10, bottom: 10, right: 10)
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
@@ -31,7 +31,8 @@ class MainVC: UIViewController {
         textView.onSendTapped = CommandWith<String> { [weak self] in
             guard let self = self else { return }
             
-            self.outputTextView.text = self.outputTextView.text + "\n" + $0
+            self.sendQuestion($0)
+            self.outputTextView.insertText("\n" + $0)
         }
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
@@ -63,17 +64,17 @@ class MainVC: UIViewController {
         setupConstraints()
         setupNotifications()
         setupDismissKeyboardGesture()
-        outputTextView.text = """
-vxczgsd
-gdfgs gfd
- gdfgdf
-g df
-g dfgsdf
-gdfs gdf gdfgsfdgsdf gdfgsdfgsdfgsdfgsdfgfdsgdf gdfg
-
-gdfgdsfg dfgsdfg dfgsfdgfdgsdgdfgsdfgsdfgdsfgdsfg
-dfgdfgsdfgsdfgsdfgdfgsdfgdsfgsdfgdfsgsdgdfgsdfgdfgsdfgdfsgsdfgsdf
-"""
+//        outputTextView.text = """
+//1 - vxczgsd
+//2 - gdfgs gfd
+//3 - gdfgdf
+//4 - g df
+//5 - g dfgsdf
+//6 - gdfs gdf gdfgsfdgsdf gdfgsdfgsdfgsdfgsdfgfdsgdf gdfg
+//7 -
+//8 - gdfgdsfg dfgsdfg dfgsfdgfdgsdgdfgsdfgsdfgdsfgdsfg
+//9 - dfgdfgsdfgsdfgsdfgdfgsdfgdsfgsdfgdfsgsdgdfgsdfgdfgsdfgdfsgsdfgsdffinish
+//"""
     }
 
     private func setupConstraints() {
@@ -81,9 +82,9 @@ dfgdfgsdfgsdfgsdfgdfgsdfgdsfgsdfgdfsgsdgdfgsdfgdfgsdfgdfsgsdfgsdf
         
         NSLayoutConstraint.activate([
             outputTextView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            outputTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            outputTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            outputTextView.bottomAnchor.constraint(equalTo: inputTextView.topAnchor),
+            outputTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 7),
+            outputTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -7),
+            outputTextView.bottomAnchor.constraint(equalTo: inputTextView.topAnchor, constant: -10),
             
             inputTextView.topAnchor.constraint(equalTo: outputTextView.bottomAnchor),
             inputTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -116,6 +117,19 @@ dfgdfgsdfgsdfgsdfgdfgsdfgdsfgsdfgdfsgsdgdfgsdfgdfgsdfgdfsgsdfgsdf
             name: UIResponder.keyboardWillHideNotification,
             object: nil
         )
+    }
+    
+    private func sendQuestion(_ question: String) {
+        viewModel.sendQuestion(question) { result in
+            switch result {
+            case .success(let answer):
+                DispatchQueue.main.async { [weak self] in
+                    self?.outputTextView.insertText(answer)
+                }
+            case .failure(let error):
+                print(String(describing: error.localizedDescription))
+            }
+        }
     }
     
     //MARK: - Actions -

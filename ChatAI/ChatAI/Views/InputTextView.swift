@@ -12,7 +12,7 @@ final class InputTextView: UIView {
     //MARK: - Properties -
     
     private let inputLinesScrollThreshold = 6
-    private let defaultTextViewHeight: CGFloat = 36.3
+    private let defaultTextViewHeight: CGFloat = 34
     private var heightConstraint: NSLayoutConstraint?
     private let fontSize: CGFloat = 15
     
@@ -28,11 +28,12 @@ final class InputTextView: UIView {
         textView.delegate = self
         textView.isScrollEnabled = false
         textView.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
-        textView.backgroundColor = .systemGroupedBackground
+        textView.backgroundColor = .systemBackground
         textView.contentInset = .init(top: 0, left: 10, bottom: 0, right: 10)
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.layer.cornerRadius = fontSize
         textView.tintColor = .systemRed
+        textView.layer.masksToBounds = true
         
         textView.showsVerticalScrollIndicator = true
         textView.showsHorizontalScrollIndicator = false
@@ -73,6 +74,7 @@ final class InputTextView: UIView {
         return label
     }()
     
+    public var text: String { textView.text }
     public var onSendTapped: CommandWith<String> = .nop
     
     //MARK: - Init -
@@ -116,9 +118,10 @@ final class InputTextView: UIView {
     }
     
     private func checkTextView() {
+        placeholderLabel.isHidden = !textView.text.isEmpty
+        
         if heightConstraint?.constant == textView.contentSize.height { return }
         
-        placeholderLabel.isHidden = !textView.text.isEmpty
         let isConstraintActive = heightConstraint.flatMap { $0.isActive } ?? false
 
         if isConstraintActive == false {
@@ -143,9 +146,13 @@ final class InputTextView: UIView {
     
     //MARK: - Actions -
     
-    @objc private func sendButtonAction() {
+    private func sendButtonTap() {
         onSendTapped.perform(with: textView.text)
         resetTextView()
+    }
+    
+    @objc private func sendButtonAction() {
+        sendButtonTap()
     }
 }
 
@@ -154,5 +161,13 @@ final class InputTextView: UIView {
 extension InputTextView: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         checkTextView()
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            sendButtonTap()
+            return false
+        }
+        return true
     }
 }
