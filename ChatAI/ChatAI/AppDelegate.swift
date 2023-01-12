@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import IQKeyboardManagerSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,7 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func setup() {
         startApp()
         setupNetworkManager()
-        setupIQKeyboard()
     }
     
     private func startApp() {
@@ -37,10 +35,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func setupNetworkManager() {
         NetworkManager.shared.setup()
     }
-    
-    private func setupIQKeyboard() {
-//        IQKeyboardManager.shared.enable = true
-//        IQKeyboardManager.shared.enableAutoToolbar = false
-    }
 }
-
