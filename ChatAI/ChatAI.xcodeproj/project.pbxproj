@@ -12,7 +12,6 @@
 		C316195E296DF22D00005CBC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C316195C296DF22D00005CBC /* Main.storyboard */; };
 		C3161960296DF22F00005CBC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C316195F296DF22F00005CBC /* Assets.xcassets */; };
 		C3161963296DF22F00005CBC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3161961296DF22F00005CBC /* LaunchScreen.storyboard */; };
-		C316196F296DF33C00005CBC /* OpenAISwift in Frameworks */ = {isa = PBXBuildFile; productRef = C316196E296DF33C00005CBC /* OpenAISwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,7 +29,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C316196F296DF33C00005CBC /* OpenAISwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,7 +55,6 @@
 			isa = PBXGroup;
 			children = (
 				C3161956296DF22D00005CBC /* AppDelegate.swift */,
-				C316196B296DF24A00005CBC /* Common */,
 				C316196A296DF23D00005CBC /* ViewController */,
 				C3161970296DF47E00005CBC /* Resources */,
 			);
@@ -71,21 +68,6 @@
 				C316195C296DF22D00005CBC /* Main.storyboard */,
 			);
 			path = ViewController;
-			sourceTree = "<group>";
-		};
-		C316196B296DF24A00005CBC /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				C316196C296DF24E00005CBC /* Extesions */,
-			);
-			path = Common;
-			sourceTree = "<group>";
-		};
-		C316196C296DF24E00005CBC /* Extesions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extesions;
 			sourceTree = "<group>";
 		};
 		C3161970296DF47E00005CBC /* Resources */ = {
@@ -115,7 +97,6 @@
 			);
 			name = ChatAI;
 			packageProductDependencies = (
-				C316196E296DF33C00005CBC /* OpenAISwift */,
 			);
 			productName = ChatAI;
 			productReference = C3161953296DF22D00005CBC /* ChatAI.app */;
@@ -146,7 +127,6 @@
 			);
 			mainGroup = C316194A296DF22D00005CBC;
 			packageReferences = (
-				C316196D296DF33C00005CBC /* XCRemoteSwiftPackageReference "OpenAISwift" */,
 			);
 			productRefGroup = C3161954296DF22D00005CBC /* Products */;
 			projectDirPath = "";
@@ -390,25 +370,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		C316196D296DF33C00005CBC /* XCRemoteSwiftPackageReference "OpenAISwift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/adamrushy/OpenAISwift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		C316196E296DF33C00005CBC /* OpenAISwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C316196D296DF33C00005CBC /* XCRemoteSwiftPackageReference "OpenAISwift" */;
-			productName = OpenAISwift;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C316194B296DF22D00005CBC /* Project object */;
 }
