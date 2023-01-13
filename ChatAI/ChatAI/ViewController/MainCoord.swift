@@ -19,6 +19,7 @@ final class MainCoord {
     
     private lazy var root: UINavigationController = {
         let root = UINavigationController(rootViewController: controller)
+        
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = .systemGray6
         root.navigationBar.scrollEdgeAppearance = appearance

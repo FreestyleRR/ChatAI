@@ -17,6 +17,11 @@ final class InputTextView: UIView {
     private var heightConstraint: NSLayoutConstraint?
     private let fontSize: CGFloat = 16
     
+    public var text: String { textView.text }
+    public var onSendTapped: CommandWith<String> = .nop
+    
+    //MARK: - Lazy properties -
+    
     private lazy var separatorView: UIView = {
         let view = UIView()
         view.backgroundColor = .tertiarySystemFill
@@ -33,7 +38,6 @@ final class InputTextView: UIView {
         textView.contentInset = .init(top: -1, left: 10, bottom: 0, right: 10)
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.layer.cornerRadius = fontSize
-        textView.tintColor = .systemRed
         textView.layer.masksToBounds = true
         
         textView.showsVerticalScrollIndicator = true
@@ -51,16 +55,13 @@ final class InputTextView: UIView {
     }()
     
     private lazy var sendButton: UIButton = {
-        var config = UIButton.Configuration.gray()
+        var config = UIButton.Configuration.filled()
         config.cornerStyle = .capsule
-        config.background.backgroundColor = .link
-        
         let imageConfig = UIImage.SymbolConfiguration(scale: .medium)
         let image = UIImage(systemName: "arrow.up", withConfiguration: imageConfig)
         
         let button = UIButton(configuration: config)
         button.setImage(image, for: .normal)
-        button.tintColor = .white
         button.addTarget(self, action: #selector(sendButtonAction), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -74,9 +75,6 @@ final class InputTextView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
-    public var text: String { textView.text }
-    public var onSendTapped: CommandWith<String> = .nop
     
     //MARK: - Init -
     
@@ -105,7 +103,6 @@ final class InputTextView: UIView {
             textView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             textView.trailingAnchor.constraint(equalTo: sendButton.leadingAnchor, constant: -7),
             textView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
-//            textView.heightAnchor.constraint(equalToConstant: defaultTextViewHeight),
             
             sendButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -7),
             sendButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -11),
