@@ -17,7 +17,7 @@ final class InputTextView: UIView {
     private var heightConstraint: NSLayoutConstraint?
     private let fontSize: CGFloat = 16
     
-    public var text: String { textView.text }
+    public var text: String { textView.text.trimmingCharacters(in: .whitespaces) }
     public var onSendTapped: CommandWith<String> = .nop
     
     //MARK: - Lazy properties -

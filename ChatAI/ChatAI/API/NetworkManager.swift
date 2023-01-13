@@ -20,10 +20,6 @@ final class NetworkManager {
     
     private var client: OpenAISwift?
     
-    @frozen enum Constatnts {
-        static let key = ""
-    }
-    
     private init() {}
     
     public func setup() {

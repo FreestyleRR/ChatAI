@@ -7,15 +7,23 @@
 
 import UIKit
 
-enum Message {
-    case question(_ question: String)
-    case answer(_ answer: String)
-}
+//enum Message {
+//    case question(_ question: String)
+//    case answer(_ answer: String)
+//}
+
+
 
 final class MainVC: UIViewController {
     var viewModel: MainVM!
     
     private var messages = [Message]()
+    
+    private var currentTime: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        return dateFormatter.string(from: Date())
+    }
     
     //MARK: - Lazy properties -
     
@@ -25,6 +33,9 @@ final class MainVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        tableView.contentInset = .init(top: 10, left: 0, bottom: 10, right: 0)
+        
+        tableView.estimatedRowHeight = 25
         tableView.separatorInset = .zero
         tableView.separatorStyle = .none
         tableView.backgroundColor = .systemBackground
@@ -34,6 +45,7 @@ final class MainVC: UIViewController {
         
         tableView.registerNib(cellType: QuestionCell.self)
         tableView.registerNib(cellType: AnswerCell.self)
+        tableView.registerNib(cellType: MessageCell.self)
         
         return tableView
     }()
@@ -59,18 +71,13 @@ final class MainVC: UIViewController {
         setup()
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        hideKeyboard()
-    }
-    
     //MARK: - Setup -
     
     private func setup() {
         setupNavBar()
         setupConstraints()
         setupGesture()
-        tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
+        setupTableView()
     }
 
     private func setupConstraints() {
@@ -80,7 +87,7 @@ final class MainVC: UIViewController {
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: inputTextView.topAnchor, constant: -10),
+            tableView.bottomAnchor.constraint(equalTo: inputTextView.topAnchor),
             
             inputTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             inputTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -91,6 +98,10 @@ final class MainVC: UIViewController {
             bottomSpacerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             bottomSpacerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
+    }
+    
+    private func setupTableView() {
+        tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
     }
     
     private func setupNavBar() {
@@ -112,20 +123,45 @@ final class MainVC: UIViewController {
     //MARK: - Network -
     
     private func sendQuestion(_ question: String) {
-        messages.insert(.question(question), at: 0)
-        tableView.reloadData()
+        if question.isEmpty { return }
+        
+        if Constatnts.key.isEmpty {
+            let questionMessage = Message(text: question, time: currentTime)
+            let answerMessage = Message(
+                text: "You need to paste your OpenAI API key. In the right corner, tap the gear and set your key.",
+                time: currentTime,
+                isQuestion: false
+            )
+            
+            messages.insert(questionMessage, at: 0)
+            tableView.reloadData()
+            
+            messages.insert(answerMessage, at: 0)
+            tableView.reloadData()
+            return
+        } else {
+            let questionMessage = Message(text: question, time: currentTime)
+            messages.insert(questionMessage, at: 0)
+            tableView.reloadData()
+        }
         
         viewModel.sendQuestion(question) { result in
             switch result {
             case .success(let answer):
                 DispatchQueue.main.async { [weak self] in
-                    self?.messages.insert(.answer(answer), at: 0)
-                    self?.tableView.reloadData()
+                    guard let self = self else { return }
+                    
+                    let answerMessage = Message(text: answer, time: self.currentTime, isQuestion: false)
+                    self.messages.insert(answerMessage, at: 0)
+                    self.tableView.reloadData()
                 }
             case .failure(let error):
                 DispatchQueue.main.async { [weak self] in
-                    self?.messages.insert(.answer(error), at: 0)
-                    self?.tableView.reloadData()
+                    guard let self = self else { return }
+                    
+                    let answerMessage = Message(text: error, time: self.currentTime, isQuestion: false)
+                    self.messages.insert(answerMessage, at: 0)
+                    self.tableView.reloadData()
                 }
             }
         }
@@ -134,7 +170,9 @@ final class MainVC: UIViewController {
     //MARK: - Actions -
     
     @objc private func settingsButtonTapped() {
-        print("tapp")
+        AlertService.shared.showAlertWithTextField {
+            Constatnts.key = $0
+        }
     }
     
     @objc private func hideKeyboard() {
@@ -144,27 +182,18 @@ final class MainVC: UIViewController {
 
 //MARK: - UITableViewDelegate, UITableViewDataSource -
 
-extension MainVC: UITableViewDelegate, UITableViewDataSource {
+extension MainVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         messages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch messages[indexPath.row] {
-        case .question(let question):
-            guard let cell: QuestionCell = tableView.dequeCell(for: indexPath) else {
-                return UITableViewCell()
-            }
-            cell.transform = CGAffineTransform(scaleX: 1, y: -1)
-            cell.configure(with: question)
-            return cell
-        case .answer(let answer):
-            guard let cell: AnswerCell = tableView.dequeCell(for: indexPath) else {
-                return UITableViewCell()
-            }
-            cell.transform = CGAffineTransform(scaleX: 1, y: -1)
-            cell.configure(with: answer)
-            return cell
+        guard let cell: MessageCell = tableView.dequeCell(for: indexPath) else {
+            return UITableViewCell()
         }
+        cell.transform = CGAffineTransform(scaleX: 1, y: -1)
+        let message = messages[indexPath.row]
+        cell.configure(with: message)
+        return cell
     }
 }
