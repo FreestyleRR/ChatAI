@@ -21,6 +21,8 @@
 		C3981A72297045C400682E60 /* OpenAISwift in Frameworks */ = {isa = PBXBuildFile; productRef = C3981A71297045C400682E60 /* OpenAISwift */; };
 		C3A4DCE8296F62150029C853 /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A4DCE7296F62150029C853 /* UITextView.swift */; };
 		C3D04733296F63650084B51B /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D04732296F63650084B51B /* Command.swift */; };
+		CC22803229714BCA00AD732D /* QuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC22803129714BCA00AD732D /* QuestionCell.swift */; };
+		CC22803429714BE400AD732D /* AnswerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC22803329714BE400AD732D /* AnswerCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +41,8 @@
 		C37B158A296F2853000177B8 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		C3A4DCE7296F62150029C853 /* UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextView.swift; sourceTree = "<group>"; };
 		C3D04732296F63650084B51B /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
+		CC22803129714BCA00AD732D /* QuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionCell.swift; sourceTree = "<group>"; };
+		CC22803329714BE400AD732D /* AnswerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +79,7 @@
 				C3161956296DF22D00005CBC /* AppDelegate.swift */,
 				C3161971296DF5F700005CBC /* API */,
 				C316196B296DF24A00005CBC /* Common */,
+				CC22803029714B9800AD732D /* Cells */,
 				C316196A296DF23D00005CBC /* ViewController */,
 				C37B1587296F2701000177B8 /* Views */,
 				C3161970296DF47E00005CBC /* Resources */,
@@ -136,6 +141,15 @@
 				C37B1588296F2725000177B8 /* InputTextView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		CC22803029714B9800AD732D /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				CC22803129714BCA00AD732D /* QuestionCell.swift */,
+				CC22803329714BE400AD732D /* AnswerCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -218,10 +232,12 @@
 				C37B158B296F2853000177B8 /* UIView.swift in Sources */,
 				C37B1589296F2725000177B8 /* InputTextView.swift in Sources */,
 				C3161973296DF60600005CBC /* NetworkManager.swift in Sources */,
+				CC22803429714BE400AD732D /* AnswerCell.swift in Sources */,
 				C3D04733296F63650084B51B /* Command.swift in Sources */,
 				C316195B296DF22D00005CBC /* MainVC.swift in Sources */,
 				C3A4DCE8296F62150029C853 /* UITextView.swift in Sources */,
 				C3161977296DF7F000005CBC /* MainCoord.swift in Sources */,
+				CC22803229714BCA00AD732D /* QuestionCell.swift in Sources */,
 				C3161957296DF22D00005CBC /* AppDelegate.swift in Sources */,
 				C3161979296DF88E00005CBC /* Storyboard.swift in Sources */,
 				C3161975296DF7B500005CBC /* MainVM.swift in Sources */,
