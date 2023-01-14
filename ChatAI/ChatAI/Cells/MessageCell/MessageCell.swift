@@ -9,6 +9,8 @@ import UIKit
 
 final class MessageCell: UITableViewCell {
     
+    //MARK: - Private properties -
+    
     private let messageView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 16
@@ -38,6 +40,8 @@ final class MessageCell: UITableViewCell {
     private var leadingConstraint: NSLayoutConstraint!
     private var trailingConstraint: NSLayoutConstraint!
     
+    //MARK: - Life Cycle View -
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         setup()
@@ -48,6 +52,8 @@ final class MessageCell: UITableViewCell {
         messageLabel.text = nil
         timeLabel.text = nil
     }
+    
+    //MARK: - Setup -
     
     private func setup() {
         selectionStyle = .none
@@ -65,17 +71,19 @@ final class MessageCell: UITableViewCell {
             messageLabel.topAnchor.constraint(equalTo: messageView.topAnchor, constant: 8),
             messageLabel.bottomAnchor.constraint(equalTo: messageView.bottomAnchor, constant: -8),
             messageLabel.leadingAnchor.constraint(equalTo: messageView.leadingAnchor, constant: 13),
-            messageLabel.trailingAnchor.constraint(equalTo: timeLabel.leadingAnchor, constant: -10),
+            messageLabel.trailingAnchor.constraint(equalTo: timeLabel.leadingAnchor, constant: -5),
             
             timeLabel.bottomAnchor.constraint(equalTo: messageView.bottomAnchor, constant: -5),
             timeLabel.trailingAnchor.constraint(equalTo: messageView.trailingAnchor, constant: -13),
         ])
         
-        leadingConstraint = messageView.leadingAnchor.constraint(greaterThanOrEqualTo: contentView.leadingAnchor, constant: 16)
+        leadingConstraint = messageView.leadingAnchor.constraint(greaterThanOrEqualTo: contentView.leadingAnchor, constant: 8)
         leadingConstraint.isActive = true
-        trailingConstraint = messageView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -16)
+        trailingConstraint = messageView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -8)
         trailingConstraint.isActive = true
     }
+    
+    //MARK: - Configure -
     
     func configure(with message: Message) {
         messageLabel.text = message.text
@@ -83,7 +91,19 @@ final class MessageCell: UITableViewCell {
         
         messageView.backgroundColor = message.isQuestion ? .systemGray6 : .systemGray4
         
-        leadingConstraint.constant = message.isQuestion ? 50 : 8
-        trailingConstraint.constant = message.isQuestion ? -8 : -50
+        if message.isQuestion {
+            leadingConstraint = messageView.leadingAnchor.constraint(greaterThanOrEqualTo: contentView.leadingAnchor, constant: 50)
+            leadingConstraint.isActive = true
+            trailingConstraint = messageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8)
+            trailingConstraint.isActive = true
+        } else {
+            leadingConstraint = messageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8)
+            trailingConstraint = messageView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -50)
+            leadingConstraint.isActive = true
+            trailingConstraint.isActive = true
+        }
+        
+//        leadingConstraint.constant = message.isQuestion ? 50 : 8
+//        trailingConstraint.constant = message.isQuestion ? -8 : -50
     }
 }

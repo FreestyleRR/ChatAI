@@ -43,8 +43,6 @@ final class MainVC: UIViewController {
         tableView.showsHorizontalScrollIndicator = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
-        tableView.registerNib(cellType: QuestionCell.self)
-        tableView.registerNib(cellType: AnswerCell.self)
         tableView.registerNib(cellType: MessageCell.self)
         
         return tableView
@@ -125,24 +123,23 @@ final class MainVC: UIViewController {
     private func sendQuestion(_ question: String) {
         if question.isEmpty { return }
         
+        let questionMessage = Message(text: question, time: currentTime)
+        messages.insert(questionMessage, at: 0)
+        insertNewCell()
+        
         if Constatnts.key.isEmpty {
-            let questionMessage = Message(text: question, time: currentTime)
-            let answerMessage = Message(
-                text: "You need to paste your OpenAI API key. In the right corner, tap the gear and set your key.",
-                time: currentTime,
-                isQuestion: false
-            )
-            
-            messages.insert(questionMessage, at: 0)
-            tableView.reloadData()
-            
-            messages.insert(answerMessage, at: 0)
-            tableView.reloadData()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
+                guard let self = self else { return }
+                
+                let answerMessage = Message(
+                    text: "You need to paste your OpenAI API key. In the right corner, tap the gear and set your key.",
+                    time: self.currentTime,
+                    isQuestion: false
+                )
+                self.messages.insert(answerMessage, at: 0)
+                self.insertNewCell()
+            }
             return
-        } else {
-            let questionMessage = Message(text: question, time: currentTime)
-            messages.insert(questionMessage, at: 0)
-            tableView.reloadData()
         }
         
         viewModel.sendQuestion(question) { result in
@@ -153,7 +150,7 @@ final class MainVC: UIViewController {
                     
                     let answerMessage = Message(text: answer, time: self.currentTime, isQuestion: false)
                     self.messages.insert(answerMessage, at: 0)
-                    self.tableView.reloadData()
+                    self.insertNewCell()
                 }
             case .failure(let error):
                 DispatchQueue.main.async { [weak self] in
@@ -161,10 +158,17 @@ final class MainVC: UIViewController {
                     
                     let answerMessage = Message(text: error, time: self.currentTime, isQuestion: false)
                     self.messages.insert(answerMessage, at: 0)
-                    self.tableView.reloadData()
+                    self.insertNewCell()
                 }
             }
         }
+    }
+    
+    private func insertNewCell() {
+        tableView.beginUpdates()
+        let indexPath = IndexPath(row: 0, section: 0)
+        tableView.insertRows(at: [indexPath], with: .top)
+        tableView.endUpdates()
     }
     
     //MARK: - Actions -
