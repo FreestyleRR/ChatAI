@@ -23,7 +23,7 @@ final class BackgroundView: UIView {
     private var emojiLabel: UILabel = {
         let label = UILabel()
         label.text = "🧐"
-        label.font = .systemFont(ofSize: 70)
+        label.font = .systemFont(ofSize: 50)
         label.textAlignment = .center
         return label
     }()
