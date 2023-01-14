@@ -29,11 +29,10 @@ final class MainVC: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
+        tableView.contentInset = .init(top: 10, left: 0, bottom: 10, right: 0)
         
         tableView.delegate = self
         tableView.dataSource = self
-        
-        tableView.contentInset = .init(top: 10, left: 0, bottom: 10, right: 0)
         
         tableView.estimatedRowHeight = 25
         tableView.separatorInset = .zero
@@ -75,6 +74,7 @@ final class MainVC: UIViewController {
         setupConstraints()
         setupGesture()
         setupTableView()
+        setupBackground()
     }
 
     private func setupConstraints() {
@@ -99,6 +99,12 @@ final class MainVC: UIViewController {
     
     private func setupTableView() {
         tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
+        tableView.frame = CGRect(
+            x: tableView.frame.origin.x,
+            y: tableView.frame.origin.y,
+            width: tableView.frame.size.width,
+            height: view.frame.size.height - tableView.frame.origin.y
+        )
     }
     
     private func setupNavBar() {
@@ -115,6 +121,12 @@ final class MainVC: UIViewController {
     private func setupGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         tableView.addGestureRecognizer(tapGesture)
+    }
+    
+    private func setupBackground() {
+        let view = BackgroundView()
+        view.transform = CGAffineTransform(scaleX: 1, y: -1)
+        tableView.backgroundView = view
     }
     
     //MARK: - Network -
@@ -163,6 +175,8 @@ final class MainVC: UIViewController {
         }
     }
     
+    //MARK: - Update cells -
+    
     private func insertNewCell() {
         tableView.beginUpdates()
         let indexPath = IndexPath(row: 0, section: 0)
@@ -187,7 +201,8 @@ final class MainVC: UIViewController {
 
 extension MainVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        messages.count
+        if messages.count > 0 { tableView.backgroundView = nil }
+        return messages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

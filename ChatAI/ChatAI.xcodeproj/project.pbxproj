@@ -24,6 +24,8 @@
 		C37256A52971AC990041E802 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37256A32971AC990041E802 /* MessageCell.swift */; };
 		C37256A62971AC990041E802 /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C37256A42971AC990041E802 /* MessageCell.xib */; };
 		C37256A92971AD040041E802 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37256A82971AD040041E802 /* Message.swift */; };
+		C37256CF29733D270041E802 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37256CE29733D270041E802 /* BackgroundView.swift */; };
+		C37256D129733F3F0041E802 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37256D029733F3F0041E802 /* UIStackView.swift */; };
 		C37B1589296F2725000177B8 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37B1588296F2725000177B8 /* InputTextView.swift */; };
 		C37B158B296F2853000177B8 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37B158A296F2853000177B8 /* UIView.swift */; };
 		C3981A72297045C400682E60 /* OpenAISwift in Frameworks */ = {isa = PBXBuildFile; productRef = C3981A71297045C400682E60 /* OpenAISwift */; };
@@ -51,6 +53,8 @@
 		C37256A32971AC990041E802 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		C37256A42971AC990041E802 /* MessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
 		C37256A82971AD040041E802 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		C37256CE29733D270041E802 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
+		C37256D029733F3F0041E802 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		C37B1588296F2725000177B8 /* InputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
 		C37B158A296F2853000177B8 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		C3A4DCE7296F62150029C853 /* UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextView.swift; sourceTree = "<group>"; };
@@ -130,6 +134,7 @@
 				C372568929716D2E0041E802 /* TableView+NibLoader.swift */,
 				C3A4DCE7296F62150029C853 /* UITextView.swift */,
 				C37B158A296F2853000177B8 /* UIView.swift */,
+				C37256D029733F3F0041E802 /* UIStackView.swift */,
 			);
 			path = Extesions;
 			sourceTree = "<group>";
@@ -182,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				C37B1588296F2725000177B8 /* InputTextView.swift */,
+				C37256CE29733D270041E802 /* BackgroundView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -272,11 +278,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C37256CF29733D270041E802 /* BackgroundView.swift in Sources */,
 				C37B158B296F2853000177B8 /* UIView.swift in Sources */,
 				C37B1589296F2725000177B8 /* InputTextView.swift in Sources */,
 				C3161973296DF60600005CBC /* NetworkManager.swift in Sources */,
 				C3D04733296F63650084B51B /* Command.swift in Sources */,
 				C372569C29717F7A0041E802 /* Style.swift in Sources */,
+				C37256D129733F3F0041E802 /* UIStackView.swift in Sources */,
 				C316195B296DF22D00005CBC /* MainVC.swift in Sources */,
 				C372569E2971A02A0041E802 /* Defines.swift in Sources */,
 				C37256A92971AD040041E802 /* Message.swift in Sources */,
