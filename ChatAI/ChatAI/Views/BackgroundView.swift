@@ -13,9 +13,9 @@ final class BackgroundView: UIView {
     
     private var textLabel: UILabel = {
         let label = UILabel()
-        label.text = "You don't have any question yet."
+        label.text = "You don't have any questions yet"
         label.textColor = .placeholderText
-        label.font = .systemFont(ofSize: 20, weight: .semibold)
+        label.font = .systemFont(ofSize: 20, weight: .light)
         label.textAlignment = .center
         return label
     }()
@@ -31,8 +31,7 @@ final class BackgroundView: UIView {
     private var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.distribution = .fill
-        stackView.spacing = 0
+        stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -64,7 +63,7 @@ final class BackgroundView: UIView {
             stackView.rightAnchor.constraint(equalTo: rightAnchor),
             stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
             stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            stackView.heightAnchor.constraint(equalToConstant: 200),
+            stackView.heightAnchor.constraint(equalToConstant: 130),
         ])
     }
 }
