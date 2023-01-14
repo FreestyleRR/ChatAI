@@ -38,7 +38,3 @@ final class NetworkManager {
         }
     }
 }
-
-struct ErrorResponse: Decodable, Error {
-    let message: String
-}

@@ -39,7 +39,6 @@ final class MainVC: UIViewController {
         tableView.separatorInset = .zero
         tableView.separatorStyle = .none
         tableView.backgroundColor = .systemBackground
-        tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
