@@ -11,11 +11,7 @@ final class InputTextView: UIView {
     
     //MARK: - Properties -
     
-    private let inputLinesScrollThreshold = 6
-    private let defaultTextViewHeight: CGFloat = 34
-    private let defaultLineHeight: CGFloat = 21
-    private var heightConstraint: NSLayoutConstraint?
-    private let fontSize: CGFloat = 16
+    private let fontSize: CGFloat = 15
     
     public var text: String { textView.text.trimmingCharacters(in: .whitespaces) }
     public var onSendTapped: CommandWith<String> = .nop
@@ -32,25 +28,19 @@ final class InputTextView: UIView {
     private lazy var textView: UITextView = {
         let textView = UITextView()
         textView.delegate = self
-        textView.isScrollEnabled = false
+        textView.textContainerInset = .init(top: 8, left: 9, bottom: 8, right: 9)
         textView.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
         textView.backgroundColor = .systemBackground
-        textView.contentInset = .init(top: -1, left: 10, bottom: 0, right: 10)
-        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.contentMode = .left
+        textView.isScrollEnabled = false
         textView.layer.cornerRadius = fontSize
         textView.layer.masksToBounds = true
-        
+        textView.returnKeyType = .send
+        textView.textContainer.maximumNumberOfLines = 0
+        textView.textContainer.lineBreakMode = .byWordWrapping
         textView.showsVerticalScrollIndicator = true
         textView.showsHorizontalScrollIndicator = false
-        
-        textView.autocapitalizationType = .none
-        textView.autocorrectionType = .no
-        textView.smartDashesType = .no
-        textView.smartInsertDeleteType = .no
-        textView.smartQuotesType = .no
-        textView.spellCheckingType = .no
-        textView.returnKeyType = .send
-        
+        textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
     
@@ -85,7 +75,7 @@ final class InputTextView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
+        fatalError("Not supported")
     }
     
     //MARK: - Setup -
@@ -109,41 +99,16 @@ final class InputTextView: UIView {
             sendButton.heightAnchor.constraint(equalToConstant: fontSize * 2),
             sendButton.widthAnchor.constraint(equalToConstant: fontSize * 2),
             
-            placeholderLabel.centerYAnchor.constraint(equalTo: textView.centerYAnchor),
-            placeholderLabel.leadingAnchor.constraint(equalTo: textView.leadingAnchor, constant: 14),
-            placeholderLabel.trailingAnchor.constraint(equalTo: textView.trailingAnchor, constant:  -14),
+            placeholderLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            placeholderLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 33),
+            placeholderLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant:  -33),
         ])
-        
-        heightConstraint = textView.heightAnchor.constraint(equalToConstant: defaultTextViewHeight)
-        heightConstraint?.isActive = true
-    }
-    
-    private func checkTextView() {
-        placeholderLabel.isHidden = !textView.text.isEmpty
-        let textViewHeight = defaultTextViewHeight * CGFloat(textView.numberOfLines)
-        
-        if heightConstraint?.constant == textViewHeight { return }
-        
-        let isConstraintActive = heightConstraint.flatMap { $0.isActive } ?? false
-
-        if isConstraintActive == false {
-            heightConstraint = textView.heightAnchor.constraint(equalToConstant: textViewHeight)
-            heightConstraint?.isActive = true
-            textView.isScrollEnabled = true
-        } else {
-            textView.isScrollEnabled = true
-            if textView.numberOfLines < inputLinesScrollThreshold {
-                heightConstraint?.constant = textView.contentSize.height
-            }
-        }
-        textView.layoutIfNeeded()
     }
     
     //MARK: - Helpers -
     
     private func resetTextView() {
         textView.text.removeAll()
-        heightConstraint?.constant = defaultTextViewHeight
         placeholderLabel.isHidden = false
     }
     
@@ -163,7 +128,7 @@ final class InputTextView: UIView {
 
 extension InputTextView: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
-        checkTextView()
+        placeholderLabel.isHidden = !textView.text.isEmpty
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
