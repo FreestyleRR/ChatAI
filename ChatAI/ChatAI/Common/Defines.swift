@@ -10,6 +10,13 @@ import UIKit
 typealias ClosureWith<T> = (T) -> Void
 typealias EmptyClosure = () -> Void
 
+enum CommonResult {
+    case success(answerMessage: String)
+    case failure(errorMessage: String)
+}
+
+typealias CommonResultClosure = (CommonResult) -> Void
+
 enum Constants {
     static var key = ""
     static var fontSize: CGFloat = 16

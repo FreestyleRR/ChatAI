@@ -21,7 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func setup() {
         startApp()
-        setupNetworkManager()
     }
     
     private func startApp() {
@@ -30,9 +29,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let coordinator = ChatCoord(window: window)
         coordinator.start()
-    }
-    
-    private func setupNetworkManager() {
-        NetworkManager.shared.setup()
     }
 }

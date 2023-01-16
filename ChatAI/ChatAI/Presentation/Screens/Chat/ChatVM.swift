@@ -18,6 +18,10 @@ final class ChatVM {
     
     //MARK: - Network -
     
+    func setupNetworkManager() {
+        networkManager.setup()
+    }
+    
     func sendQuestion(_ question: String, completion: @escaping CommonResultClosure) {
         networkManager.getResponse(input: question) { result in
             switch result {

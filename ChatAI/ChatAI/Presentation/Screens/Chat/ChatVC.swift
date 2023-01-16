@@ -91,11 +91,12 @@ final class ChatVC: UIViewController {
     
     private func setupNavBar() {
         let item = UIBarButtonItem(
-            image: UIImage(systemName: "gear"),
+            image: .init(systemName: "gear"),
             style: .plain,
             target: self,
             action: #selector(settingsButtonTapped)
         )
+        
         navigationItem.rightBarButtonItem = item
         navigationItem.title = "Chat AI"
     }
@@ -116,48 +117,33 @@ final class ChatVC: UIViewController {
     private func sendQuestion(_ question: String) {
         if question.isEmpty { return }
         
-        let questionMessage = Message(text: question, time: currentTime)
-        messages.insert(questionMessage, at: 0)
-        insertNewCell()
+        addMessage(question)
         
         if Constants.key.isEmpty {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
-                guard let self = self else { return }
-                
-                let answerMessage = Message(
-                    text: "You need to paste your OpenAI API key. In the right corner, tap the gear and set your key.",
-                    time: self.currentTime,
-                    isQuestion: false
-                )
-                self.messages.insert(answerMessage, at: 0)
-                self.insertNewCell()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { [weak self] in
+                let message = "You need to paste your OpenAI API key. In the right corner, tap the gear and set your key."
+                self?.addMessage(message, isQuestion: false)
             }
             return
         }
         
-        viewModel.sendQuestion(question) { result in
+        viewModel.sendQuestion(question) { [weak self] result in
             switch result {
             case .success(let answer):
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    
-                    let answerMessage = Message(text: answer, time: self.currentTime, isQuestion: false)
-                    self.messages.insert(answerMessage, at: 0)
-                    self.insertNewCell()
-                }
+                self?.addMessage(answer, isQuestion: false)
             case .failure(let error):
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    
-                    let answerMessage = Message(text: error, time: self.currentTime, isQuestion: false)
-                    self.messages.insert(answerMessage, at: 0)
-                    self.insertNewCell()
-                }
+                self?.addMessage(error, isQuestion: false)
             }
         }
     }
     
-    //MARK: - Update cells -
+    //MARK: - Helpers -
+    
+    private func addMessage(_ message: String, isQuestion: Bool = true) {
+        let answerMessage = Message(text: message, time: currentTime, isQuestion: isQuestion)
+        messages.insert(answerMessage, at: 0)
+        DispatchQueue.main.async { [weak self] in self?.insertNewCell() }
+    }
     
     private func insertNewCell() {
         tableView.beginUpdates()
@@ -169,7 +155,10 @@ final class ChatVC: UIViewController {
     //MARK: - Actions -
     
     @objc private func settingsButtonTapped() {
-        AlertService.shared.showAlertWithTextField { Constants.key = $0 }
+        AlertService.shared.showAlertWithTextField { [weak self] in
+            Constants.key = $0
+            self?.viewModel.setupNetworkManager()
+        }
     }
     
     @objc private func hideKeyboard() {
