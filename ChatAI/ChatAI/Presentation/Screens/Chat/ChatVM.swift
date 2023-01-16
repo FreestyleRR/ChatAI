@@ -1,5 +1,5 @@
 //
-//  MainVM.swift
+//  ChatVM.swift
 //  ChatAI
 //
 //  Created by Pavel Sharkov on 10.01.2023.
@@ -7,11 +7,11 @@
 
 import Foundation
 
-final class MainVM {
-    private let coordinator: MainCoord
+final class ChatVM {
+    private let coordinator: ChatCoord
     private let networkManager: NetworkManager
     
-    init(_ coordinator: MainCoord) {
+    init(_ coordinator: ChatCoord) {
         self.coordinator = coordinator
         networkManager = NetworkManager.shared
     }

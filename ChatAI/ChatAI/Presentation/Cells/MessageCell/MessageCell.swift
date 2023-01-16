@@ -15,7 +15,6 @@ final class MessageCell: UITableViewCell {
     private let messageView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = Constants.fontSize - 1
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -31,7 +30,6 @@ final class MessageCell: UITableViewCell {
         textView.backgroundColor = .clear
         textView.textContainerInset = .init(top: 6, left: 6, bottom: 6, right: 0)
         textView.font = .systemFont(ofSize: Constants.fontSize)
-        textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
     
@@ -40,7 +38,6 @@ final class MessageCell: UITableViewCell {
         label.textAlignment = .left
         label.font = .systemFont(ofSize: Constants.fontSize - 6)
         label.textColor = .systemGray
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -71,7 +68,7 @@ final class MessageCell: UITableViewCell {
     }
     
     private func setupConstraints() {
-        contentView.addSubview(messageView)
+        contentView.addSubviews(messageView)
         messageView.addSubviews(messageTextView, timeLabel)
         
         NSLayoutConstraint.activate([
@@ -104,10 +101,9 @@ final class MessageCell: UITableViewCell {
     func configure(with message: Message) {
         self.message = message
         
+        messageView.backgroundColor = message.isQuestion ? .systemGray6 : .systemGray4
         messageTextView.text = message.text
         timeLabel.text = message.time
-        
-        messageView.backgroundColor = message.isQuestion ? .systemGray6 : .systemGray4
         
         if message.isQuestion {
             NSLayoutConstraint.deactivate(answerConstraints)

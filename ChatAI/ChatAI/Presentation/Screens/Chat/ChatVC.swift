@@ -1,5 +1,5 @@
 //
-//  MainVC.swift
+//  ChatVC.swift
 //  ChatAI
 //
 //  Created by Pavel Sharkov on 10.01.2023.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-final class MainVC: UIViewController {
-    var viewModel: MainVM!
+final class ChatVC: UIViewController {
+    var viewModel: ChatVM!
     
     //MARK: - Private properties -
     
@@ -32,7 +32,6 @@ final class MainVC: UIViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .systemBackground
         tableView.showsHorizontalScrollIndicator = false
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.registerNib(cellType: MessageCell.self)
         return tableView
     }()
@@ -40,14 +39,12 @@ final class MainVC: UIViewController {
     private lazy var inputTextView: InputTextView = {
         let textView = InputTextView()
         textView.onSendTapped = CommandWith<String> { [weak self] in self?.sendQuestion($0) }
-        textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
     
     private lazy var bottomSpacerView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemGray6
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -182,7 +179,7 @@ final class MainVC: UIViewController {
 
 //MARK: - UITableViewDelegate, UITableViewDataSource -
 
-extension MainVC: UITableViewDataSource, UITableViewDelegate {
+extension ChatVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if messages.count > 0 { tableView.backgroundView = nil }
         return messages.count

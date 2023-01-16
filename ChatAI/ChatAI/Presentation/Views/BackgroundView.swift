@@ -32,7 +32,6 @@ final class BackgroundView: UIView {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     
@@ -56,7 +55,7 @@ final class BackgroundView: UIView {
     
     private func setupConstraints() {
         stackView.addArrangedSubviews(emojiLabel, textLabel)
-        addSubview(stackView)
+        addSubviews(stackView)
         
         NSLayoutConstraint.activate([
             stackView.leftAnchor.constraint(equalTo: leftAnchor),

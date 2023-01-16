@@ -1,5 +1,5 @@
 //
-//  MainCoord.swift
+//  ChatCoord.swift
 //  ChatAI
 //
 //  Created by Pavel Sharkov on 10.01.2023.
@@ -7,13 +7,13 @@
 
 import UIKit
 
-final class MainCoord {
+final class ChatCoord {
     
     private weak var window: UIWindow?
     
-    private lazy var controller: MainVC = {
-        let controller: MainVC = Storyboard.main.instantiate()
-        controller.viewModel = MainVM(self)
+    private lazy var controller: ChatVC = {
+        let controller: ChatVC = Storyboard.chat.instantiate()
+        controller.viewModel = ChatVM(self)
         return controller
     }()
     
@@ -37,7 +37,7 @@ final class MainCoord {
 
 //MARK: - Navigation -
 
-extension MainCoord {
+extension ChatCoord {
     func start() {
         window?.rootViewController = root
         window?.makeKeyAndVisible()

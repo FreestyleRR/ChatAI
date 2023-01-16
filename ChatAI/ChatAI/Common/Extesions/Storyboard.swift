@@ -12,10 +12,7 @@ protocol StoryboardIdentifiable {
 }
 
 enum Storyboard {
-    
-    //MARK: - Tabs -
-    
-    static let main = storyboard(name: "Main")
+    static let chat = storyboard(name: "Chat")
 }
 
 private func storyboard(name: String, bundle: Bundle? = nil) -> UIStoryboard {

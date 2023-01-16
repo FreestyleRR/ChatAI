@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let window = UIWindow(frame: UIScreen.main.bounds)
         self.window = window
         
-        let coordinator = MainCoord(window: window)
+        let coordinator = ChatCoord(window: window)
         coordinator.start()
     }
     

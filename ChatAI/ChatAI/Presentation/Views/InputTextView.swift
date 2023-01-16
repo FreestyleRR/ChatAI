@@ -19,7 +19,6 @@ final class InputTextView: UIView {
     private lazy var separatorView: UIView = {
         let view = UIView()
         view.backgroundColor = .tertiarySystemFill
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -27,7 +26,7 @@ final class InputTextView: UIView {
         let textView = UITextView()
         textView.delegate = self
         textView.textContainerInset = .init(top: 6, left: 9, bottom: 6, right: 9)
-        textView.font = UIFont.systemFont(ofSize: Constants.fontSize, weight: .regular)
+        textView.font = .systemFont(ofSize: Constants.fontSize, weight: .regular)
         textView.backgroundColor = .systemBackground
         textView.contentMode = .left
         textView.isScrollEnabled = false
@@ -38,7 +37,6 @@ final class InputTextView: UIView {
         textView.textContainer.lineBreakMode = .byWordWrapping
         textView.showsVerticalScrollIndicator = true
         textView.showsHorizontalScrollIndicator = false
-        textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
     
@@ -52,16 +50,14 @@ final class InputTextView: UIView {
         let button = UIButton(configuration: config)
         button.setImage(image, for: .normal)
         button.addTarget(self, action: #selector(sendButtonAction), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     private lazy var placeholderLabel: UILabel = {
         let label = UILabel()
         label.text = "Question"
-        label.font = UIFont.systemFont(ofSize: Constants.fontSize, weight: .regular)
+        label.font = .systemFont(ofSize: Constants.fontSize, weight: .regular)
         label.textColor = .placeholderText
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
