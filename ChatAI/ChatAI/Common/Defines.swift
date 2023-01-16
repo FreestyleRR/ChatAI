@@ -10,8 +10,9 @@ import UIKit
 typealias ClosureWith<T> = (T) -> Void
 typealias EmptyClosure = () -> Void
 
-enum Constatnts {
+enum Constants {
     static var key = ""
+    static var fontSize: CGFloat = 16
 }
 
 func getTopController(from: UIViewController? = nil) -> UIViewController? {

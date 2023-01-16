@@ -23,7 +23,7 @@ final class NetworkManager {
     private init() {}
     
     public func setup() {
-        client = OpenAISwift.init(authToken: Constatnts.key)
+        client = OpenAISwift.init(authToken: Constants.key)
     }
     
     public func getResponse(input: String, completion: @escaping CommonResultClosure) {

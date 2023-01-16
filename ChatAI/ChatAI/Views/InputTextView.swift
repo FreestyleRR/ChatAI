@@ -11,8 +11,6 @@ final class InputTextView: UIView {
     
     //MARK: - Properties -
     
-    private let fontSize: CGFloat = 15
-    
     public var text: String { textView.text.trimmingCharacters(in: .whitespaces) }
     public var onSendTapped: CommandWith<String> = .nop
     
@@ -28,12 +26,12 @@ final class InputTextView: UIView {
     private lazy var textView: UITextView = {
         let textView = UITextView()
         textView.delegate = self
-        textView.textContainerInset = .init(top: 8, left: 9, bottom: 8, right: 9)
-        textView.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
+        textView.textContainerInset = .init(top: 6, left: 9, bottom: 6, right: 9)
+        textView.font = UIFont.systemFont(ofSize: Constants.fontSize, weight: .regular)
         textView.backgroundColor = .systemBackground
         textView.contentMode = .left
         textView.isScrollEnabled = false
-        textView.layer.cornerRadius = fontSize
+        textView.layer.cornerRadius = Constants.fontSize
         textView.layer.masksToBounds = true
         textView.returnKeyType = .send
         textView.textContainer.maximumNumberOfLines = 0
@@ -47,6 +45,7 @@ final class InputTextView: UIView {
     private lazy var sendButton: UIButton = {
         var config = UIButton.Configuration.filled()
         config.cornerStyle = .capsule
+        config.preferredSymbolConfigurationForImage = .init(weight: .semibold)
         let imageConfig = UIImage.SymbolConfiguration(scale: .medium)
         let image = UIImage(systemName: "arrow.up", withConfiguration: imageConfig)
         
@@ -60,7 +59,7 @@ final class InputTextView: UIView {
     private lazy var placeholderLabel: UILabel = {
         let label = UILabel()
         label.text = "Question"
-        label.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: Constants.fontSize, weight: .regular)
         label.textColor = .placeholderText
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -89,15 +88,15 @@ final class InputTextView: UIView {
             separatorView.trailingAnchor.constraint(equalTo: trailingAnchor),
             separatorView.heightAnchor.constraint(equalToConstant: 1),
             
-            textView.topAnchor.constraint(equalTo: separatorView.bottomAnchor, constant: 9),
+            textView.topAnchor.constraint(equalTo: separatorView.bottomAnchor, constant: 6),
             textView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             textView.trailingAnchor.constraint(equalTo: sendButton.leadingAnchor, constant: -7),
-            textView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+            textView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -7),
             
             sendButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -7),
-            sendButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -11),
-            sendButton.heightAnchor.constraint(equalToConstant: fontSize * 2),
-            sendButton.widthAnchor.constraint(equalToConstant: fontSize * 2),
+            sendButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -7),
+            sendButton.heightAnchor.constraint(equalToConstant: (Constants.fontSize - 1) * 2),
+            sendButton.widthAnchor.constraint(equalToConstant: (Constants.fontSize - 1) * 2),
             
             placeholderLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             placeholderLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 33),

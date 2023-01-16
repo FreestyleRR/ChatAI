@@ -7,15 +7,10 @@
 
 import UIKit
 
-//enum Message {
-//    case question(_ question: String)
-//    case answer(_ answer: String)
-//}
-
-
-
 final class MainVC: UIViewController {
     var viewModel: MainVM!
+    
+    //MARK: - Private properties -
     
     private var messages = [Message]()
     
@@ -30,19 +25,15 @@ final class MainVC: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.contentInset = .init(top: 10, left: 0, bottom: 10, right: 0)
-        
         tableView.delegate = self
         tableView.dataSource = self
-        
         tableView.estimatedRowHeight = 25
         tableView.separatorInset = .zero
         tableView.separatorStyle = .none
         tableView.backgroundColor = .systemBackground
         tableView.showsHorizontalScrollIndicator = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        
         tableView.registerNib(cellType: MessageCell.self)
-        
         return tableView
     }()
     
@@ -99,12 +90,6 @@ final class MainVC: UIViewController {
     
     private func setupTableView() {
         tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
-        tableView.frame = CGRect(
-            x: tableView.frame.origin.x,
-            y: tableView.frame.origin.y,
-            width: tableView.frame.size.width,
-            height: view.frame.size.height - tableView.frame.origin.y
-        )
     }
     
     private func setupNavBar() {
@@ -138,7 +123,7 @@ final class MainVC: UIViewController {
         messages.insert(questionMessage, at: 0)
         insertNewCell()
         
-        if Constatnts.key.isEmpty {
+        if Constants.key.isEmpty {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
                 guard let self = self else { return }
                 
@@ -187,9 +172,7 @@ final class MainVC: UIViewController {
     //MARK: - Actions -
     
     @objc private func settingsButtonTapped() {
-        AlertService.shared.showAlertWithTextField {
-            Constatnts.key = $0
-        }
+        AlertService.shared.showAlertWithTextField { Constants.key = $0 }
     }
     
     @objc private func hideKeyboard() {

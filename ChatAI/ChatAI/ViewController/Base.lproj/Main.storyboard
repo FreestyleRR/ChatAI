@@ -3,6 +3,7 @@
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,34 +17,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Mhf-6C-eUK">
-                                <rect key="frame" x="0.0" y="357" width="390" height="130"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🧐" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JiA-gQ-419">
-                                        <rect key="frame" x="157.66666666666666" y="0.0" width="75" height="65"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="70"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="fjhdsjf kjasdhfkljdshafk" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dK8-9p-Bp0">
-                                        <rect key="frame" x="107.66666666666667" y="65" width="174.66666666666663" height="65"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aji-Sb-KOy">
+                                <rect key="frame" x="145" y="372" width="100" height="100"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="130" id="ZDX-Af-Leo"/>
+                                    <constraint firstAttribute="height" constant="100" id="dPI-be-V39"/>
+                                    <constraint firstAttribute="width" constant="100" id="j7e-ih-GPb"/>
                                 </constraints>
-                            </stackView>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" cornerStyle="capsule">
+                                    <imageReference key="image" image="arrow.up" catalog="system" symbolScale="medium"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" weight="semibold"/>
+                                </buttonConfiguration>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Mhf-6C-eUK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Hwf-H7-mpI"/>
-                            <constraint firstItem="Mhf-6C-eUK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="UpT-YW-GHv"/>
-                            <constraint firstItem="Mhf-6C-eUK" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="dTu-H1-o9s"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Mhf-6C-eUK" secondAttribute="trailing" id="ycM-jN-Evh"/>
+                            <constraint firstItem="aji-Sb-KOy" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="axL-f1-8Lp"/>
+                            <constraint firstItem="aji-Sb-KOy" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qcy-qe-TXl"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -53,6 +44,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow.up" catalog="system" width="118" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

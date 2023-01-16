@@ -14,25 +14,31 @@ final class MessageCell: UITableViewCell {
     
     private let messageView: UIView = {
         let view = UIView()
-        view.layer.cornerRadius = 14
+        view.layer.cornerRadius = Constants.fontSize - 1
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private var messageLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.textAlignment = .left
-        label.lineBreakMode = .byWordWrapping
-        label.font = .systemFont(ofSize: 15)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    private var messageTextView: UITextView = {
+        let textView = UITextView()
+        textView.textContainer.lineBreakMode = .byWordWrapping
+        textView.textContainer.maximumNumberOfLines = 0
+        textView.textAlignment = .left
+        textView.isUserInteractionEnabled = true
+        textView.isEditable = false
+        textView.isScrollEnabled = false
+        textView.isSelectable = true
+        textView.backgroundColor = .clear
+        textView.textContainerInset = .init(top: 6, left: 6, bottom: 6, right: 0)
+        textView.font = .systemFont(ofSize: Constants.fontSize)
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        return textView
     }()
     
     private let timeLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.font = .systemFont(ofSize: 9)
+        label.font = .systemFont(ofSize: Constants.fontSize - 6)
         label.textColor = .systemGray
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -50,7 +56,7 @@ final class MessageCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        messageLabel.text = nil
+        messageTextView.text = nil
         timeLabel.text = nil
         NSLayoutConstraint.deactivate(questionConstraints)
         NSLayoutConstraint.deactivate(answerConstraints)
@@ -66,20 +72,20 @@ final class MessageCell: UITableViewCell {
     
     private func setupConstraints() {
         contentView.addSubview(messageView)
-        messageView.addSubviews(messageLabel, timeLabel)
+        messageView.addSubviews(messageTextView, timeLabel)
         
         NSLayoutConstraint.activate([
             messageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
             messageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
             
-            messageLabel.topAnchor.constraint(equalTo: messageView.topAnchor, constant: 5),
-            messageLabel.bottomAnchor.constraint(equalTo: messageView.bottomAnchor, constant: -7),
-            messageLabel.leadingAnchor.constraint(equalTo: messageView.leadingAnchor, constant: 10),
-            messageLabel.trailingAnchor.constraint(equalTo: timeLabel.leadingAnchor, constant: -4),
+            messageTextView.topAnchor.constraint(equalTo: messageView.topAnchor),
+            messageTextView.bottomAnchor.constraint(equalTo: messageView.bottomAnchor),
+            messageTextView.leadingAnchor.constraint(equalTo: messageView.leadingAnchor),
+            messageTextView.trailingAnchor.constraint(equalTo: timeLabel.leadingAnchor, constant: -1),
             
             timeLabel.widthAnchor.constraint(equalToConstant: 30),
             timeLabel.bottomAnchor.constraint(equalTo: messageView.bottomAnchor, constant: -5),
-            timeLabel.trailingAnchor.constraint(equalTo: messageView.trailingAnchor, constant: -3),
+            timeLabel.trailingAnchor.constraint(equalTo: messageView.trailingAnchor, constant: -5),
         ])
         
         let leadingConstraintQuestion = messageView.leadingAnchor.constraint(greaterThanOrEqualTo: contentView.leadingAnchor, constant: 50)
@@ -98,7 +104,7 @@ final class MessageCell: UITableViewCell {
     func configure(with message: Message) {
         self.message = message
         
-        messageLabel.text = message.text
+        messageTextView.text = message.text
         timeLabel.text = message.time
         
         messageView.backgroundColor = message.isQuestion ? .systemGray6 : .systemGray4
