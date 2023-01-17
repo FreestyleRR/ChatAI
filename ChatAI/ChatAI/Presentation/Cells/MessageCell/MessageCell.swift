@@ -41,6 +41,11 @@ final class MessageCell: UITableViewCell {
         return label
     }()
     
+    private let activityIndicatorView: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        return indicator
+    }()
+    
     private var questionConstraints = [NSLayoutConstraint]()
     private var answerConstraints = [NSLayoutConstraint]()
     
@@ -68,12 +73,15 @@ final class MessageCell: UITableViewCell {
     }
     
     private func setupConstraints() {
-        contentView.addSubviews(messageView)
+        contentView.addSubviews(messageView, activityIndicatorView)
         messageView.addSubviews(messageTextView, timeLabel)
         
         NSLayoutConstraint.activate([
             messageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
             messageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
+            
+            activityIndicatorView.trailingAnchor.constraint(equalTo: messageView.leadingAnchor, constant: -10),
+            activityIndicatorView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -11),
             
             messageTextView.topAnchor.constraint(equalTo: messageView.topAnchor),
             messageTextView.bottomAnchor.constraint(equalTo: messageView.bottomAnchor),
@@ -104,6 +112,8 @@ final class MessageCell: UITableViewCell {
         messageView.backgroundColor = message.isQuestion ? .systemGray6 : .systemGray4
         messageTextView.text = message.text
         timeLabel.text = message.time
+        message.isQuestion ? startAnimating() : stopAnimating()
+        activityIndicatorView.isHidden = !message.isQuestion
         
         if message.isQuestion {
             NSLayoutConstraint.deactivate(answerConstraints)
@@ -112,5 +122,15 @@ final class MessageCell: UITableViewCell {
             NSLayoutConstraint.deactivate(questionConstraints)
             NSLayoutConstraint.activate(answerConstraints)
         }
+    }
+    
+    //MARK: - Animation -
+    
+    public func startAnimating() {
+        activityIndicatorView.startAnimating()
+    }
+    
+    public func stopAnimating() {
+        activityIndicatorView.stopAnimating()
     }
 }

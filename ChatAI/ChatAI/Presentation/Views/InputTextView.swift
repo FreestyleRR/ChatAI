@@ -12,6 +12,10 @@ final class InputTextView: UIView {
     //MARK: - Properties -
     
     public var text: String { textView.text.trimmingCharacters(in: .whitespaces) }
+    public var sendButtonIsUserInteraction: Bool {
+        get { sendButton.isUserInteractionEnabled }
+        set { sendButton.isUserInteractionEnabled = newValue }
+    }
     public var onSendTapped: CommandWith<String> = .nop
     
     //MARK: - Lazy properties -
@@ -32,7 +36,7 @@ final class InputTextView: UIView {
         textView.isScrollEnabled = false
         textView.layer.cornerRadius = Constants.fontSize
         textView.layer.masksToBounds = true
-        textView.returnKeyType = .send
+//        textView.returnKeyType = .defaultsend
         textView.textContainer.maximumNumberOfLines = 0
         textView.textContainer.lineBreakMode = .byWordWrapping
         textView.showsVerticalScrollIndicator = true
@@ -126,11 +130,11 @@ extension InputTextView: UITextViewDelegate {
         placeholderLabel.isHidden = !textView.text.isEmpty
     }
     
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n" {
-            sendButtonTap()
-            return false
-        }
-        return true
-    }
+//    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+//        if text == "\n" {
+//            sendButtonTap()
+//            return false
+//        }
+//        return true
+//    }
 }

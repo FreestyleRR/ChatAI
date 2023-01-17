@@ -10,6 +10,8 @@ import UIKit
 final class ChatVC: UIViewController {
     var viewModel: ChatVM!
     
+    public var onStopIndicator: Command = .nop
+    
     //MARK: - Private properties -
     
     private var messages = [Message]()
@@ -118,16 +120,20 @@ final class ChatVC: UIViewController {
         if question.isEmpty { return }
         
         addMessage(question)
+        inputTextView.sendButtonIsUserInteraction = false
         
         if Constants.key.isEmpty {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { [weak self] in
                 let message = "You need to paste your OpenAI API key. In the right corner, tap the gear and set your key."
                 self?.addMessage(message, isQuestion: false)
+                self?.onStopIndicator.perform()
             }
             return
         }
         
         viewModel.sendQuestion(question) { [weak self] result in
+            self?.onStopIndicator.perform()
+            
             switch result {
             case .success(let answer):
                 self?.addMessage(answer, isQuestion: false)
@@ -181,6 +187,10 @@ extension ChatVC: UITableViewDataSource, UITableViewDelegate {
         cell.transform = CGAffineTransform(scaleX: 1, y: -1)
         let message = messages[indexPath.row]
         cell.configure(with: message)
+        onStopIndicator = Command { [weak self] in
+            self?.inputTextView.sendButtonIsUserInteraction = true
+            cell.stopAnimating()
+        }
         return cell
     }
 }
